@@ -1,26 +1,63 @@
-.gallery{
+.gallery {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
+    max-width: 800px;
+    margin: 0 auto;
     gap: 20px;
 }
 
-.box-root{
-    background: #b9b9b9 ;
+.box-root {
+    /*margin: 5px;*/
+    border: 1px solid #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    border-radius: 5px;
+    overflow: hidden;
+    transition: all .4s ease;
+    position: relative;
 }
-.box{
-    height: 200px;
-    background-color: rgb(83, 101, 52);
+.box-root:hover::before  {
+    visibility: visible;
+    background-color: rgba(80, 80, 80, 0.62);
+    /*background-color: rgba(80, 80, 80, 0.62);*/
+
+}
+.box-root::before  {
+    transition: all .4s ease;
+    visibility: hidden;
+
+    width: 1000px;
+    height: 1000px;
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
-.drag-item{
-    border: 1px  solid  #696969 !important;
+.box {
+    cursor: pointer;
+}
+.box img {
+    width: 100%;
+    height: 100%;
+    object-fit:cover;
+    display: block;
 }
 
-.drag-item .box{
-
+.dragged-placeholder {
+    position: absolute;
+    pointer-events: none;
+    background-color: #dc7979;
+    z-index: 1001;
+    top: 0;
+    left: 0;
 }
 
-.dragging {
-    background-color: #fff; /* Set background to white */
-    border: 2px dashed #ccc; /* Add a dashed border */
+.dragged-placeholder {}
+.box.dragged {
+    background-color: #79abdc;
+    border: 2px dashed #ccc;
 }
