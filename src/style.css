@@ -1,0 +1,21 @@
+.gellery{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.box-root{
+    background: #b9b9b9 ;
+}
+.box{
+    height: 200px;
+    background-color: rgb(83, 101, 52);
+}
+
+.drag-item{
+    border: 1px  solid  #696969 !important;
+}
+
+.drag-item .box{
+
+}
