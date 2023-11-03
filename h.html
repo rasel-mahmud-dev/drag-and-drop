@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <style>
+        .dragdemo {
+            width: 200px;
+            height: 100px;
+            line-height: 100px;
+            text-align: center;
+            background: rgb(0, 83, 128);
+            color: #efe;
+        }
+    </style>
+
+</head>
+<body>
+<div id="dragster" class="dragdemo" draggable="true">draggable task</div>
+</body>
+<script>
+    document.getElementById("dragster").addEventListener("dragstart", function(e) {
+        var hideDragImage = this.cloneNode(true);
+        hideDragImage.id = "hideDragImage-hide"
+
+        var dragImage = this.cloneNode(true);
+        dragImage.id = "draggeimage";
+        dragImage.style.position = "absolute";
+
+        hideDragImage.style.opacity = 0;
+        document.body.appendChild(hideDragImage);
+        document.body.appendChild(dragImage);
+        e.dataTransfer.setDragImage(hideDragImage, 0, 0);
+    }, false);
+
+    document.getElementById("dragster").addEventListener("dragend", function(e) {
+        var hideDragImage = document.getElementById('hideDragImage-hide');
+        var dragImage = document.getElementById('draggeimage');
+        hideDragImage.remove()
+        dragImage.remove()
+    }, false);
+
+    document.getElementById("dragster").addEventListener("drag", (event) => {
+        dragImage = document.getElementById('draggeimage');
+        if(dragImage) {
+            dragImage.style.left = event.pageX + "px";
+            dragImage.style.top = event.pageY + "px";
+        }
+    })
+
+</script>
+</html>

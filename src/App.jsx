@@ -19,14 +19,65 @@ function App() {
 
     const [draggedItem, setDraggedItem] = useState(null);
 
+    function handleDrag(e) {
+        const dragImage = document.getElementById("draggeimage");
+        if (dragImage) {
+            const mouseX = e.clientX;
+            const mouseY = e.clientY;
+
+            dragImage.style.left = `${mouseX}px`;
+            dragImage.style.top = `${mouseY}px`;
+        }
+    }
+
     function handleDragStart(e, id) {
         dragItem.current = id;
         setDraggedItem(id);
         e.dataTransfer.effectAllowed = "move";
+
+        const parentDiv = e.target.closest('.box');
+
+        const hideDragImage = parentDiv.cloneNode(true);
+        hideDragImage.id = "hideDragImage-hide";
+
+        const dragImage = parentDiv.cloneNode(true);
+        dragImage.id = "draggeimage";
+        dragImage.classList.add("floating-image");
+        dragImage.style.position = "absolute";
+
+        hideDragImage.style.opacity = 0;
+        document.body.appendChild(hideDragImage);
+        document.body.appendChild(dragImage);
+        e.dataTransfer.setDragImage(hideDragImage, 0, 0);
+
+        document.addEventListener("drag", handleDrag);
+
+    }
+
+    function handleDragEnd() {
+        const hideDragImage = document.getElementById("hideDragImage-hide");
+        const dragImage = document.getElementById("draggeimage");
+
+        if (hideDragImage) hideDragImage.remove();
+        if (dragImage) dragImage.remove();
+
+        setDraggedItem(null);
+
+        document.removeEventListener("drag", handleDrag);
+    }
+
+    function handleDrag(e) {
+        const dragImage = document.getElementById("draggeimage");
+        if (dragImage) {
+            dragImage.style.left = e.pageX + "px";
+            dragImage.style.top = e.pageY + "px";
+        }
     }
 
     function handleDragOver(e) {
         e.preventDefault();
+        e.stopPropagation()
+        e.bubbles = false
     }
 
     function handleDrop(e, id) {
@@ -43,34 +94,28 @@ function App() {
         updatedItems.splice(dropTargetIndex, 0, draggedItem);
 
         setItems(updatedItems);
-        setDraggedItem(null);
+        handleDragEnd();
     }
 
     return (
         <div>
             <div className="gallery">
                 {items.map((item) => (
-                    <div key={item.id} className="box-root">
-                        <div
-                            onDragStart={(e) => handleDragStart(e, item.id)}
-                            onDragOver={handleDragOver}
-                            onDrop={(e) => handleDrop(e, item.id)}
-                            draggable={true}
-                            className={`box box-${item.id} ${draggedItem === item.id ? "dragging" : ""}`}
-                        >
-                            <img src={item.image} alt=""/>
-                        </div>
-                        {draggedItem === item.id && (
-                            <div className="dragged-placeholder">
-                                <div className={`box box-${draggedItem} dragged`}>
-                                    {item.title}
-                                </div>
-                            </div>
-                        )}
+                    <div
+                        key={item.id}
+                        onDragStart={(e) => handleDragStart(e, item.id)}
+                        onDragEnd={handleDragEnd}
+                        onDragOver={handleDragOver}
+                        onDrop={(e) => handleDrop(e, item.id)}
+                        draggable={true}
+                        className={`box box-${item.id} ${draggedItem === item.id ? "dragging" : ""}`}
+                    >
+                       <div>
+                           <img src={item.image} alt={item.title} />
+                       </div>
                     </div>
                 ))}
             </div>
-
         </div>
     );
 }

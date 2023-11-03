@@ -6,7 +6,7 @@
     gap: 20px;
 }
 
-.box-root {
+.box {
     /*margin: 5px;*/
     border: 1px solid #ccc;
     display: flex;
@@ -16,26 +16,29 @@
     border-radius: 5px;
     overflow: hidden;
     transition: all .4s ease;
-    position: relative;
+    width: 200px;
+    height: 200px;
 }
-.box-root:hover::before  {
-    visibility: visible;
-    background-color: rgba(80, 80, 80, 0.62);
-    /*background-color: rgba(80, 80, 80, 0.62);*/
+.floating-image{
+    transition: none;
+    background-color: white;
+}
 
-}
-.box-root::before  {
-    transition: all .4s ease;
-    visibility: hidden;
-
-    width: 1000px;
-    height: 1000px;
-    content: "";
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-}
+/*.box:hover::before  {*/
+/*    visibility: visible;*/
+/*    background-color: rgba(80, 80, 80, 0.62);*/
+/*}*/
+/*.box::before  {*/
+/*    transition: all .4s ease;*/
+/*    visibility: hidden;*/
+/*    width: 1000px;*/
+/*    height: 1000px;*/
+/*    content: "";*/
+/*    display: block;*/
+/*    position: absolute;*/
+/*    top: 0;*/
+/*    left: 0;*/
+/*}*/
 
 .box {
     cursor: pointer;
@@ -60,4 +63,18 @@
 .box.dragged {
     background-color: #79abdc;
     border: 2px dashed #ccc;
+}
+
+.dragdemo {
+    width: 200px;
+    height: 100px;
+    line-height: 100px;
+    text-align: center;
+    background: rgb(0, 83, 128);
+    color: #efe;
+}
+
+#draggeimage {
+    z-index: 1000;
+    pointer-events: none;
 }
