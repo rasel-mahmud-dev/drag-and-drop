@@ -1,4 +1,4 @@
-.gellery{
+.gallery{
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 20px;
@@ -18,4 +18,9 @@
 
 .drag-item .box{
 
+}
+
+.dragging {
+    background-color: #fff; /* Set background to white */
+    border: 2px dashed #ccc; /* Add a dashed border */
 }
